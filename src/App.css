@@ -1,0 +1,11 @@
+.add
+{
+  font-size: 18px;
+  display: flex;
+  justify-content: left;
+}
+#subbtn{
+  font-size: 15px;
+  margin: 15px;
+  margin-left: 0px;
+}
