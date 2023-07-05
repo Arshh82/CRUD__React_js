@@ -4,12 +4,12 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 const App = () => {
   let [data, updatedata] = useState([]);
-  let [product, updateproduct] = useState({ name: '', email: '', address: '', password: '' });
+  let [product, updateproduct] = useState({ id:'', name: '', image: '', imagehov: '', size: '',amount:'' });
   useEffect(() => {
     show();
   });
   async function show() {
-    var res = await axios.get("http://tanveerpp.pythonanywhere.com/emps/");
+    var res = await axios.get("https://arshil-eyewear.onrender.com/Eyeglassrangeapi/");
     updatedata(res.data);
   }
   function change(e) {
@@ -21,7 +21,7 @@ const App = () => {
         <form onSubmit={(e) => {
           e.preventDefault();
           async function addData() {
-            var res = await axios.post('http://tanveerpp.pythonanywhere.com/emps/', product);
+            var res = await axios.post('https://arshil-eyewear.onrender.com/Eyeglassrangeapi/', product);
             alert("Sucess")
             if (res.status === 200) {
               alert("product added sucessfully");
@@ -29,18 +29,26 @@ const App = () => {
           }
           addData();
         }}>
-          <div className="col-sm-12 offset-sm-1">
+          <div className="col-lg-12 offset-sm-1">
             <br />
             Name <br />
             <input type="text" name="name" value={product.name} onChange={change} className='form-control' /><br />
 
-            Email <br />
-            <input type="email" name="email" value={product.email} onChange={change} className='form-control' /><br />
-            Address<br />
-            <input type="text" name="address" value={product.address} onChange={change} className='form-control' /><br />
-            Password<br />
-            <input type="text" name="password" value={product.password} onChange={change} className='form-control' />
+            Image <br />
+            <input type="url" name="image" value={product.image} onChange={change} className='form-control' /><br />
+            Image_2<br />
+            <input type="url" name="imagehov" value={product.imagehov} onChange={change} className='form-control' /><br />
+            Size<br />
+            <input type="text" name="size" value={product.size} onChange={change} className='form-control' /><br />
+             Amount<br />
+            <input type="number" name="amount" value={product.amount} onChange={change} className='form-control' /><br />
+            ID<br />
+            <input type="number" name="id" value={product.id} onChange={change} className='form-control' /><br />
             <button className='btn btn-primary' type='submit' id='subbtn'>Add Product</button>
+            <hr></hr>
+            <thead>
+            <th>CURRENT LENGTH {data.length}</th>
+              </thead>
           </div>
         </form>
       </div>
@@ -50,10 +58,10 @@ const App = () => {
           <tr>
             <th>ID</th>
             <th>NAME</th>
-            <th>EMAIL</th>
-            <th>ADDRESS</th>
-            <th>PASSWORD</th>
-            <th>Delete</th>
+            <th>IMAGE</th>
+            <th>IMAGE_HOV</th>
+            <th>SIZE</th>
+            <th>AMOUNT</th>
           </tr>
         </thead>
         <tbody>
@@ -61,21 +69,34 @@ const App = () => {
             return (<tr key={v.id}>
               <td>{v.id}</td>
               <td>{v.name}</td>
-              <td>{v.email}</td>
-              <td>{v.address}</td>
-              <td>{v.password}</td>
+              <td><img src={v.image} alt='no_img' className='d-flex w-100 h-100' /></td>
+              <td><img src={v.imagehov} alt='no_img' className=' d-flex w-100 h-100' /></td>
+              <td>{v.size}</td>
+              <td>{v.amount}</td>
               <td><button className='btn btn-danger' onClick={(e) => {
                 e.preventDefault();
                 async function dltData() {
-                  var res = await axios.delete('http://tanveerpp.pythonanywhere.com/emps/');
+                  var res = await axios.delete(`https://arshil-eyewear.onrender.com/Eyeglassrangeapi/${v.id}`);
                   alert("Sucess")
                 }
                 dltData();
               }}
               >Delete</button></td>
+              <td><button className='btn btn-success' onClick={(e) => {
+                e.preventDefault();
+                async function dltData() {
+                  var res = await axios.put('https://arshil-eyewear.onrender.com/Eyeglassrangeapi/');
+                  alert("Sucess")
+                }
+                dltData();
+              }}
+              >update</button></td>
             </tr>)
           })}
+
+          
         </tbody>
+        
       </table>
 
     </>
